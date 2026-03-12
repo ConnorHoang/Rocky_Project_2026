@@ -1,17 +1,17 @@
 %loads and plots the motor calibration data
 
 %path and file name of data
-fpath = ''; %path (change this!)
-fname_in = 'CoolTerm Capture (Motor_test) 2026-02-27 11-07-33-588.txt'; %file name (change this!)
+fpath = 'C:\Users\choang\College\ESA\Rocky\Rocky_Project_2026\'; %path (change this!)
+fname_in = 'Motor R16 Atp03'; %file name (change this!)
 
 %load the motor calibration data
 motor_data = readmatrix([fpath,fname_in]);
 
 %unpack the motor calibration data
-t = motor_data(:,1);
+t = motor_data(4:end,1);
 % cut vectors to one cycle
-ind_1 = find(t>=25.998, 1);
-ind_2 = find(t>=27, 1);
+ind_1 = find(t>=4, 1);
+ind_2 = find(t>=5.1, 1);
 t_plot = t(ind_1:ind_2);
 y_L = motor_data(ind_1:ind_2,2); v_L = motor_data(ind_1:ind_2,3);
 y_R = motor_data(ind_1:ind_2,4); v_R = motor_data(ind_1:ind_2,5);

@@ -2,8 +2,8 @@
 
 
 % Load data from file
-fpath = "";
-fname = "CoolTerm Capture Gyro_1) 2026-02-27 11-15-17-735";
+fpath = 'C:\Users\choang\College\ESA\Rocky\Rocky_Project_2026\'; %path (change this!)
+fname = 'Motor R16 Atp04.txt'; %file name (change this!)
 data = readmatrix(fname);
 t = data(:,1) - data(1,1);
 theta = data(:,2);

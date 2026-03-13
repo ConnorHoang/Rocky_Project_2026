@@ -17,3 +17,4 @@ function [t, theta] = load_pendulum_data()
 end
 
 load_pendulum_data()
+

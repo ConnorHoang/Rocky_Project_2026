@@ -40,24 +40,28 @@ rsquare = 0;
 t_shift = t_plot - t_plot(1);
 
 % Compute the fit line for the left motor
-while rsquare < 0.90
+iter = 0;
+while rsquare < 0.90 && iter<100
     x0 = [.04 0.05];
     fit_func = fittype(@(K,tau,x) K/tau * (1 - exp(-x./tau)));
     [fit_result,gof] = fit(t_shift,v_L,fit_func,'StartPoint',x0);
     coeffs_L = coeffvalues(fit_result);
     rsquare = gof.rsquare;
+    iter = iter+1;
 end
 K_L = coeffs_L(1)   % this is beta
 tau_L = coeffs_L(2) % this is 1/alpha
 
 % Compute the fit line for the right motor
 rsquare = 0;
-while rsquare < 0.90
+iter = 0;
+while rsquare<0.90 && iter<100
     x0 = [.04 0.05];
     fit_func = fittype(@(K,tau,x) K/tau * (1 - exp(-x./tau)));
     [fit_result,gof] = fit(t_shift,v_R,fit_func,'StartPoint',x0);
     coeffs_R = coeffvalues(fit_result);
     rsquare = gof.rsquare;
+    iter = iter+1;
 end
 K_R = coeffs_R(1)   % this is beta
 tau_R = coeffs_R(2) % this is 1/alpha

@@ -86,11 +86,17 @@ void BalanceRocky()
 
     // **************Enter the control parameters here
     
-  float Kp = 0;
-  float Ki = 0;
-  float Ci = 0;   
-  float Jp = 0;
-  float Ji = 0;
+  float Kp = 1084.6;
+  float Ki = 4013.63;
+  float Ci = -12.5046;   
+  float Jp = -143.4271;
+  float Ji = -40.0148;
+
+  Kp = 1084.6 * 1;
+  Ki = 4013.63 * 1;
+  Ci = -12.5046;   
+  Jp = -143.4271;
+  Ji = -40.0148;
 
 
 
@@ -109,7 +115,7 @@ void BalanceRocky()
    // dist_accum - integral of the distance
 
    // *** enter an equation for v_d in terms of the variables available ****
-    v_d =  // this is the desired velocity from the angle controller 
+    v_d = -angle_rad*Kp - Ki*angle_rad_accum; // this is the desired velocity from the angle controller 
       
 
   // The next two lines implement the feedback controller for the motor. Two separate velocities are calculated. 
@@ -119,13 +125,8 @@ void BalanceRocky()
   // right to left. This helps ensure that the Left and Right motors are balanced
 
   // *** enter equations for input signals for v_c (left and right) in terms of the variables available ****
-    v_c_R = 
-    v_c_L =        
-
-
-
-
-
+    v_c_R = -Jp*(v_d-measured_speedR)-Ji*distRight_m-Ci*dist_accum;
+    v_c_L = -Jp*(v_d-measured_speedL)-Ji*distLeft_m-Ci*dist_accum;       
 
     // save desired speed for debugging
     desSpeedL = v_c_L;
@@ -290,7 +291,7 @@ void loop()
     motors.setSpeeds(0,0);
     start_flag = 0;
   }
-  else if(start_flag && angle < -0.78)
+  else if(start_flag && angle_rad < -0.78)
   {
     motors.setSpeeds(0,0);
     start_flag = 0;

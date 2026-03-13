@@ -19,8 +19,8 @@ bool isBalancingStatus;
 bool balanceUpdateDelayedStatus;
 extern float speedCont;          // this is the motor speed 
 
-#define KP 63.953
-#define KI 236.62
+#define KP 11
+#define KI 1
 #define KD 1
 
 

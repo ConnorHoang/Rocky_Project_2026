@@ -35,7 +35,7 @@ function Rocky_5_closed_loop_poles(a_val, b_val, l_val, p1, p2, p3, p4, p5)
     % with motor feedback
     Hcloop = 1/(1-Hvtheta*Mfb*K);    % use this for motor with feedback
     
-    pretty(simplify(Hcloop))       % to display the total transfer function
+    % pretty(simplify(Hcloop))       % to display the total transfer function
     
     % Substitute parameters and solve
     % system parameters
@@ -47,7 +47,7 @@ function Rocky_5_closed_loop_poles(a_val, b_val, l_val, p1, p2, p3, p4, p5)
     % a = 14;           %nominal motor parameters
     % b = 1/400;        %nominal motor parameters
     
-    Hcloop_sub = subs(Hcloop) % sub parameter values into Hcloop
+    Hcloop_sub = subs(Hcloop); % sub parameter values into Hcloop
     
     % specify locations of the target poles,
     % choose # based on order of Htot denominator

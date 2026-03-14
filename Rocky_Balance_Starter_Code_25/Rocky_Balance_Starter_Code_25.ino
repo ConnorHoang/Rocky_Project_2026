@@ -10,7 +10,7 @@
 // The balancing algorithm is implemented in BalanceRocky()
 // which you should modify to get the balancing to work
 //
-
+// 643, 555
 
 #include <Balboa32U4.h>
 #include <Wire.h>
@@ -92,15 +92,26 @@ void BalanceRocky()
   float Jp = -143.4271;
   float Ji = -40.0148;
 
-  Kp = 1084.6 * 1;
-  Ki = 4013.63 * 1;
-  Ci = -12.5046;   
-  Jp = -143.4271;
-  Ji = -40.0148;
+// Best so far
+  // Kp = 978.0070 * 1; 
+  // Ki = 4678.63 * 1;
+  // Jp = -55.0520;
+  // Ji = -106.2893; This was all shifted somehow between the three
+  // Ci = -9.3785;   
 
+  // Kp = 2222; Sam Bloom values
+  // Ki = 9325;
+  // Jp = 2857;
+  // Ji = -846;
+  // Ci = -651;
 
+  Kp = 3.2335e+03 * 1; 
+  Ki = 1.5439e+04 * 1;
+  Jp = 198.6701;
+  Ji = -1.8757e+03;
+  Ci = -1.5631e+03;
 
-
+    float RIGHT_WHEEL_COMP = 1.0;
     float v_c_L, v_c_R; // these are the control velocities to be sent to the motors
     float v_d = 0; // this is the desired speed produced by the angle controller
 
@@ -115,7 +126,7 @@ void BalanceRocky()
    // dist_accum - integral of the distance
 
    // *** enter an equation for v_d in terms of the variables available ****
-    v_d = -angle_rad*Kp - Ki*angle_rad_accum; // this is the desired velocity from the angle controller 
+    v_d = angle_rad*Kp + Ki*angle_rad_accum; // this is the desired velocity from the angle controller 
       
 
   // The next two lines implement the feedback controller for the motor. Two separate velocities are calculated. 
@@ -125,8 +136,11 @@ void BalanceRocky()
   // right to left. This helps ensure that the Left and Right motors are balanced
 
   // *** enter equations for input signals for v_c (left and right) in terms of the variables available ****
-    v_c_R = -Jp*(v_d-measured_speedR)-Ji*distRight_m-Ci*dist_accum;
-    v_c_L = -Jp*(v_d-measured_speedL)-Ji*distLeft_m-Ci*dist_accum;       
+    // v_c_R = RIGHT_WHEEL_COMP * (v_d - (Jp*(measured_speedR) + Ji*distRight_m + Ci*dist_accum)); // Magic number 0.8 is compensation for stronger wheel
+    // v_c_L = v_d - (Jp*(measured_speedL) + Ji*distLeft_m + Ci*dist_accum);       
+  v_c_R = RIGHT_WHEEL_COMP * (v_d - (Jp*(measured_speedR) + Ji*distLeft_m + Ci*dist_accum)); 
+  v_c_L = v_d - (Jp*(measured_speedL) + Ji*distRight_m + Ci*dist_accum);
+
 
     // save desired speed for debugging
     desSpeedL = v_c_L;

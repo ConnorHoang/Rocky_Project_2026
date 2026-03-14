@@ -1,6 +1,6 @@
 % loads and plots the motor calibration data
 % name of data - ensure that it is in this folder!
-fname_in = 'Motor R16 Atp03'; %file name
+fname_in = 'Motor R16 Attempt04'; %file name
 
 % load the motor calibration data
 motor_data = readmatrix(fname_in);
